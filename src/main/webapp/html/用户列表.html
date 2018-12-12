@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+    <link rel="stylesheet" href="css/layui.css"/>
+    <script src="js/vue.js"></script>
+    <script src="js/vue-resource1.5.1.js"></script>
+</head>
+<body>
+<div id="app">
+    <div>
+        <p>姓名:<input v-model="username"/></p>
+        <p><input type="button" value="提交" @click="save"></p>
+        <p>搜索:<input v-focus v-color/></p>
+    </div>
+
+    <table class="layui-table">
+        <colgroup>
+            <col width="150">
+            <col width="200">
+            <col width="200">
+            <col width="200">
+
+        </colgroup>
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>username</th>
+            <th>date</th>
+            <th>do</th>
+        </tr>
+        </thead>
+        <tbody v-for="item in users" :key="item.id">
+        <tr>
+            <td>{{item.id}}</td>
+            <td>{{item.username}}</td>
+            <td>{{item.date | format}}</td>
+            <td><input type="button" value="删除" @click="del(item.id)"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script>
+    Vue.directive('color',{
+        bind:function (el) {
+            el.style.color='red';
+        }
+    })
+
+    Vue.directive('focus',{
+        bind:function () {
+
+        },
+        inserted:function (el) {
+            el.focus();
+        }
+    })
+
+    Vue.filter('format',function (dataStr) {
+        let date = new Date(dataStr);
+        let y = date.getFullYear();
+        let m = date.getMonth()+1;
+        let d = date.getDay();
+        return y+"-"+m+"-"+d;
+    })
+
+    new Vue({
+        el: "#app",
+        data: {
+            users: [
+                {id: 1, username: 'kangkang', date: new Date()}
+            ],
+            username:''
+        },
+        created:function () {
+          this.list();
+        },
+        methods:{
+            list(){
+                this.$http.get('/user/list').then(result=>{
+                    let data = result.data;
+                    if(data.succee){
+                        this.users=data.data;
+                    }else{
+                        alert("数据获取失败!")
+                    }
+                })
+            },
+            save(){
+                this.$http.post('/user/save',{username:this.username},{emulateJSON:true}).then(result=>{
+                    let data = result.data;
+                    if(data.succee){
+                        this.list();
+                    }else{
+                        alert("数据获取失败!")
+                    }
+                })
+            },
+            del(id){
+                this.$http.post('/user/delete',{id:id},{emulateJSON:true}).then(result=>{
+                    let data = result.data;
+                    if(data.succee){
+                        this.list();
+                    }else{
+                        alert("数据获取失败!")
+                    }
+                })
+            }
+        }
+    });
+
+</script>
+
+</html>
