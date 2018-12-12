@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .inner{
+            height: 100px;
+            background-color: aquamarine;
+            margin-top: 10px;
+        }
+        .out{
+            height: 200px;
+            padding: 50px;
+            background-color: blueviolet;
+        }
+    </style>
+    <script src="../js/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="inner" @click="innerdiv">
+            <input type="button" value="事件冒泡" @click="maopao"/>
+        </div>
+        <!-- 阻止事件的冒泡-->
+        <div class="inner" @click="innerdiv">
+            <input type="button" value="阻止冒泡" @click.stop="maopao"/>
+        </div>
+
+        <!-- self仅自身被点击时出发-->
+        <div class="inner" @click.self="innerdiv">
+            <input type="button" value="self修饰" @click="maopao"/>
+        </div>
+
+        <!-- self并不能阻止冒泡-->
+        <div class="out" @click="out">
+            <div class="inner" @click.self="innerdiv">
+                <input type="button" value="self并不能阻止冒泡" @click="maopao"/>
+            </div>
+        </div>
+
+        <!-- 事件只能触发一次-->
+        <div class="inner" @click="innerdiv">
+            <input type="button" value="事件只能出发一次" @click.once="maopao"/>
+        </div>
+
+        <!-- 阻止默认事件的触发-->
+    <a href="http://www.baidu.com" @click.prevent="maopao">有问题去百度</a>
+    <a href="http://www.baidu.com" @click="maopao">有问题去百度</a>
+
+    </div>
+</body>
+<script>
+    new Vue({
+            el:"#app",
+            data:{
+                msg:"你好vue"
+            },
+            methods:{
+                innerdiv(){
+                    console.log("innerdiv事件");
+
+                },
+                maopao(){
+                    console.log("button事件");
+                },
+                out(){
+                    console.log("outdiv事件");
+                }
+            }
+        });
+
+</script>
+
+</html>

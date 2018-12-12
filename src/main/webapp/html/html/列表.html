@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.min.js"></script>
+    <link rel="stylesheet" href="../css/layui.css">
+</head>
+<body>
+    <div id="app">
+        <div class="layui-form-item">
+            <label class="layui-form-label">时间</label>
+            <div class="layui-input-block">
+                <input type="text"  required  lay-verify="required" placeholder="请输入时间" autocomplete="off" class="layui-input" v-model="date">
+            </div>
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-block">
+                <input type="text"  required lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input" v-model="name">
+            </div>
+            <label class="layui-form-label">地址</label>
+            <div class="layui-input-block">
+                <input type="text"  required lay-verify="required" placeholder="请输入住址" autocomplete="off"
+                       class="layui-input" v-model="address" @keyup.f2="save">
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo" @click="save">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary" @click="reset">重置</button>
+                </div>
+            </div>
+            <label class="layui-form-label">搜索</label>
+            <div class="layui-input-block">
+                <!-- v-color="'blue'" 其中的blue 需要加引号，否则它会当成一个data中的字段去取值-->
+                <input type="text"  autocomplete="off" class="layui-input" v-focus  v-model="keyword" v-color="'blue'">
+            </div>
+        </div>
+        <table class="layui-table">
+            <colgroup>
+                <col width="150">
+                <col width="200">
+                <col width="200">
+                <col width="200">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>加入时间</th>
+                <th>昵称</th>
+                <th>地址</th>
+                <th></th>
+            </tr>
+            </thead>
+            <!-- 实现搜索 -->
+            <tbody v-for="(user,id) in search(keyword)" :key="user.name">
+            <tr>
+                <td>{{ user.date }}</td>
+                <td>{{ user.name}}</td>
+                <td>{{user.address}}</td>
+                <td><button class="layui-btn layui-btn-danger" @click="del(user.name)">删除</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    <!-- 自定义按键修饰符-->
+    Vue.config.keyCodes.f2=113;
+
+    //自定义全局指令
+    Vue.directive('focus',{
+        bind:function (el) {//绑定的时候
+            
+        },
+        inserted:function (el) {//插入的时候
+            el.focus();
+        },
+        updated:function (el) {
+            
+        }
+        
+    });
+    //给搜索框设置字体颜色
+    Vue.directive('color',{
+        bind:function (el,binding){
+            //value 表示计算后的值如1+1 结果会是2 ，expression 则是表达式，即最后的结果是1+1 而不会计算
+            let value = binding.value;
+            let expression = binding.expression;
+            console.log(expression+"expression");
+            el.style.color=value;
+        },
+        inserted:function () {
+
+        },
+        updated:function () {
+
+        }
+    });
+
+    new Vue({
+            el:"#app",
+            data:{
+                msg:"你好vue",
+                date:"",
+                name:"",
+                address:"",
+                keyword:'',
+                users: [{
+                    date: '2016-05-02',
+                    name: '张三',
+                    address: '上海市普陀区金沙江路 1518 弄'
+                }, {
+                    date: '2016-05-04',
+                    name: '李四',
+                    address: '上海市普陀区金沙江路 1517 弄'
+                }, {
+                    date: '2016-05-01',
+                    name: '王五',
+                    address: '上海市普陀区金沙江路 1519 弄'
+                }, {
+                    date: '2016-05-03',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1516 弄'
+                }]
+            },
+        methods:{
+            save(){
+                let obj={date:this.date,name:this.name,address:this.address};
+                this.users.push(obj);
+                this.date=this.name=this.address="";
+            },
+            reset(){
+                console.log("...");
+                this.date=this.name=this.address="";
+            },
+            del(name){
+                console.log("..."+name);
+                var indx = this.users.findIndex((itme, i)=>{
+                    if(itme.name==name){
+                        console.log(itme.name+"......."+i);
+                        return true;
+                    }
+                });
+                console.log(indx+"index");
+                this.users.splice(indx,1);
+                // this.users.some((item,i)=>{
+                //     if(item.name==name){
+                //             console.log(item.name+"......."+i);
+                //             this.users.splice(i,1);
+                //               return true;
+                //     }
+                // });
+            },
+            search(keyword){
+                console.log(this.keyword+"keyword");
+                //过滤
+                return this.users.filter(item=>{
+                    if(item.name.indexOf(keyword)!=-1){
+                        return true;
+                    }
+                })
+            }
+        }
+    });
+
+</script>
+
+</html>

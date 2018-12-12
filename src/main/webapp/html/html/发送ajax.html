@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.min.js"></script>
+    <script src="../js/vue-resource1.5.1.js"></script>
+    <link rel="stylesheet" href="../css/layui.css">
+</head>
+<body>
+    <div id="app">
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-block">
+                <input type="text"  required lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input" v-model="name">
+            </div>
+            <label class="layui-form-label">id</label>
+            <div class="layui-input-block">
+                <input type="text"  required lay-verify="required" placeholder="请输入住址" autocomplete="off"
+                       class="layui-input" v-model="id" @keyup.f2="save">
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo" @click="save">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary" @click="reset">重置</button>
+                </div>
+            </div>
+            <label class="layui-form-label">搜索</label>
+            <div class="layui-input-block">
+                <!-- v-color="'blue'" 其中的blue 需要加引号，否则它会当成一个data中的字段去取值-->
+                <input type="text"  autocomplete="off" class="layui-input" v-focus  v-model="keyword" v-color="'blue'">
+            </div>
+        </div>
+        <table class="layui-table">
+            <colgroup>
+                <col width="150">
+                <col width="200">
+                <col width="200">
+                <col width="200">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>加入时间</th>
+                <th>昵称</th>
+                <th>id</th>
+                <th></th>
+            </tr>
+            </thead>
+            <!-- 实现搜索 -->
+            <tbody v-for="user in users" :key="user.id">
+            <tr>
+                <td>{{ user.date }}</td>
+                <td>{{ user.name}}</td>
+                <td>{{user.id}}</td>
+                <td><button class="layui-btn layui-btn-danger" @click="del(user.id)">删除</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    <!-- 自定义按键修饰符-->
+    Vue.config.keyCodes.f2=113;
+
+    //自定义全局指令
+    Vue.directive('focus',{
+        bind:function (el) {//绑定的时候
+            
+        },
+        inserted:function (el) {//插入的时候
+            el.focus();
+        },
+        updated:function (el) {
+            
+        }
+        
+    });
+    //给搜索框设置字体颜色
+    Vue.directive('color',{
+        bind:function (el,binding){
+            //value 表示计算后的值如1+1 结果会是2 ，expression 则是表达式，即最后的结果是1+1 而不会计算
+            let value = binding.value;
+            let expression = binding.expression;
+            console.log(expression+"expression");
+            el.style.color=value;
+        },
+        inserted:function () {
+
+        },
+        updated:function () {
+
+        }
+    });
+
+    Vue.filter('format',function (dateStr) {
+        var date = new Date(dateStr);
+        var year = date.getFullYear;
+        var mounth= date.getMonth()+ 1;
+        var day=date.getDay();
+        return year+'-'+mounth+"-"+day;
+    })
+
+    new Vue({
+            el:"#app",
+            data:{
+                msg:"你好vue",
+                name:"",
+                id:"",
+                keyword:'',
+                users: [{
+                    date: new Date(),
+                    name: '张三',
+                    id: '2'
+                }, {
+                    date: new Date(),
+                    name: '李四',
+                    id: '1'
+                }]
+            },
+        created:function(){
+          this.showlist();
+        },
+        methods:{
+            save(){
+                this.$http.post('/user/save',{name:this.name,id:this.id},{emulateJSON:true}).then(result=>{
+                    if(result.data.success){
+                        this.showlist();
+                    }else {
+                        alert("获取数据失败");
+                    }
+                })
+            },
+            reset(){
+
+            },
+            del(id){
+                this.$http.post('/user/delete',{id:id},{emulateJSON:true}).then(result=>{
+                    if(result.data.success){
+                        this.showlist();
+                    }else {
+                        alert("获取数据失败");
+                    }
+                })
+            },
+            showlist(){
+                this.$http.get('/user/list').then(result=>{
+                	console.log(result.data);
+                    if(result.data.success){
+                        this.users=result.data.data;
+                    }else {
+                        alert("获取数据失败");
+                    }
+                })
+            }
+
+        }
+    });
+
+</script>
+
+</html>

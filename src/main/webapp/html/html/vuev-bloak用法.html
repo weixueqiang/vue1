@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!-- 使用v-cloak能解决插值时闪烁问题-->
+    <p v-cloak>+++++++++++++{{ msg }}-----------</p>
+    <p v-text="msg">+++++++++++</p>
+    <!-- v-text 会覆盖标签能原有的数据，但没有闪烁问题-->
+    <!-- v-html 会按标签显示-->
+    <div v-text="msg1"></div>
+    <div v-html="msg1"></div>
+
+    <!-- v-bing: 绑定数据，可以简写为： 字段名可进行合法的js操作-->
+    <p><input type="button"   value="普通按钮"  title="mytitle"/></p>
+    <p><input type="button"  value="v-bing按钮" v-bind:title="mytitle"/></p>
+    <p><input type="button"  value="v-bing+js按钮" v-bind:title="mytitle + '123'"/></p>
+    <p><input type="button"  value="v-bing简写按钮" :title="mytitle + '123'"/></p>
+
+    <!-- v-on 绑定事件 可使用@代替-->
+    <p><input type="button"  value="v-on事件按钮" v-on:click="show"/></p>
+
+
+
+</div>
+</body>
+<script src="../js/vue.min.js"></script>
+<script>
+    new Vue({
+            el:"#app",
+            data:{
+                msg:"你好vue。。",
+                msg1:'<h1>我是个h1标签</h1>',
+                mytitle:'我自定义的title'
+            },
+            methods:{//方法
+                show:function () {
+                    alert("Hello!");
+                }
+            }
+        });
+
+</script>
+
+</html>

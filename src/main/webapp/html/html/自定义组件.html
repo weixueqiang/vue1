@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{ msg }}</p>
+        <comp></comp>
+        <comp2></comp2>
+        <comp3></comp3>
+    </div>
+<template id="tem">
+    <div>
+        <h1>这是用组件创建出来的</h1>
+        <p>这是用组件创建出来的</p>
+    </div>
+</template>
+</body>
+<script>
+
+    Vue.component('comp',{
+        template:"#tem"
+    });
+
+    Vue.component('comp2',{
+        template: '<h1>这个是方式二创建出来的</h1>'
+    });
+    
+    let extend = Vue.extend({
+        template:'<h1>这个是方式三创建出来的</h1>'
+    });
+
+    Vue.component('comp3',extend);
+
+
+    new Vue({
+            el:"#app",
+            data:{
+                msg:"你好vue"
+            }
+        });
+
+</script>
+
+</html>

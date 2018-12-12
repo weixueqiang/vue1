@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 过滤器用| 管道符号传递，可传递多个，当vue对象内部有同名的过滤器时，使用内部的-->
+        <p>{{ msg | format | letter}}</p>
+    </div>
+    <div id="app1">
+        <p>{{ msg | format | letter}}</p>
+
+
+    </div>
+</body>
+<script>
+    Vue.filter('format',function (str) {
+        return str+'123';
+    });
+    Vue.filter('letter',function (str) {
+        return str+'abc';
+    });
+    new Vue({
+        el:"#app",
+        data:{
+            msg:"你好vue"
+        }
+
+    });
+    new Vue({
+            el:"#app1",
+            data:{
+                msg:"你好vue"
+            },
+            filters:{
+                format:function (str) {
+                   // 补0
+                   str=str.padStart(10,'0');
+                    return str+'你好';
+                }
+            }
+        });
+
+</script>
+
+</html>
