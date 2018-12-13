@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{ msg }}</p>
+        <comp1></comp1>
+    </div>
+<template id="temp">
+    <div>
+        <h1>自定义组件</h1>
+    </div>
+</template>
+
+</body>
+<script>
+
+    Vue.component('comp1',{
+        template:'#temp',
+        data:function () {
+            return "ni"
+        }
+    })
+
+    new Vue({
+            el:"#app",
+            data:{
+                msg:"你好vue"
+            }
+        });
+
+</script>
+
+</html>

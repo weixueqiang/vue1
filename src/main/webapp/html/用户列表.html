@@ -66,6 +66,11 @@
         return y+"-"+m+"-"+d;
     })
 
+//    自定义全局的url头部,需注意后面请求连接是相对路径
+    Vue.http.options.root='http://192.168.99.54:8090/user/';
+    //开启application/x-www-form-urlencoded
+    Vue.http.options.emulateJSON=true;
+
     new Vue({
         el: "#app",
         data: {
@@ -79,7 +84,8 @@
         },
         methods:{
             list(){
-                this.$http.get('/user/list').then(result=>{
+                this.$http.get('list').then(result=>{
+//                this.$http.get('http://localhost:9090/first-fuan-school/admin/graduate/basic').then(result=>{
                     let data = result.data;
                     if(data.succee){
                         this.users=data.data;
@@ -89,7 +95,7 @@
                 })
             },
             save(){
-                this.$http.post('/user/save',{username:this.username},{emulateJSON:true}).then(result=>{
+                this.$http.post('save',{username:this.username}).then(result=>{
                     let data = result.data;
                     if(data.succee){
                         this.list();
@@ -99,7 +105,7 @@
                 })
             },
             del(id){
-                this.$http.post('/user/delete',{id:id},{emulateJSON:true}).then(result=>{
+                this.$http.post('delete',{id:id}).then(result=>{
                     let data = result.data;
                     if(data.succee){
                         this.list();
