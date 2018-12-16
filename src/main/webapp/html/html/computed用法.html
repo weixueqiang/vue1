@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>{{ msg }}</p>
+    <input v-model="firstName">+
+    <input v-model="lastName">=
+    <input v-model="name">
+</div>
+</body>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            msg:"你好vue",
+            firstName:'',
+            lastName:''
+        },
+        methods:{
+            change(){
+                this.name=this.firstName+'-'+this.lastName;
+            }
+        },
+       computed:{
+            'name':function () {
+                return this.firstName+"-"+this.lastName;
+            }
+       }
+    });
+
+</script>
+
+</html>

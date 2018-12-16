@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{ msg }}</p>
+        <p><input type="button" value="获取" @click="getElement"></p>
+        <!-- 使用ref获取dom-->
+        <p ref="myp">使用ref获取标签内容</p>
+        <comp1 ref="mycomp"></comp1>
+    </div>
+</body>
+<script>
+
+    var comp={
+        template:"#temp",
+        data: function () {
+
+            return {msg:"son msg"}
+        },
+        methods: {
+            show(){
+                console.log("调用了show方法")
+            }
+        }
+
+    }
+
+    new Vue({
+            el:"#app",
+            data:{
+                msg:"你好vue"
+            },
+            methods:{
+                getElement(){
+                    //使用$refs获取
+                    console.log(this.$refs.myp.innerText);
+                    console.log(this.$refs.mycomp.msg);
+                    this.$refs.mycomp.show();
+                }
+            },
+            components:{
+                comp1:comp
+            }
+        });
+
+</script>
+
+</html>

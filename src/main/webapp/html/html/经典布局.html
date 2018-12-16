@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.min.js"></script>
+    <script src="../js/vue-router.js"></script>
+    <style>
+        h1{
+            margin:0px;
+            padding: 0px;
+        }
+        .head{
+            background-color: #00FF00;
+            height: 300px;
+        }
+        #d{
+            display: flex;
+            height: 600px;
+        }
+        .left{
+            flex: 2;
+            background-color: #9F9F9F;
+        }
+        .mainbox{
+            flex: 8;
+            background-color: #2F4056;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <p>{{ msg }}</p>
+        <router-view></router-view>
+        <div id="d">
+            <router-view name="left"></router-view>
+            <router-view name="mainbox"></router-view>
+        </div>
+    </div>
+</body>
+<script>
+    const  header={
+        template:'<h1 class="head">我是头部</h1>'
+    }
+    const  left={
+        template:'<h1 class="left">我是左边</h1>'
+    }
+    const  mainbox={
+        template:'<h1 class="mainbox">我是中间</h1>'
+    }
+
+    const router=new VueRouter({
+        routes:[
+            {path:'/',components:{
+                    default:header,
+                    left:left,
+                    mainbox:mainbox
+                }
+            }
+        ]
+    })
+
+    new Vue({
+            el:"#app",
+            data:{
+                msg:"你好vue"
+            },
+            router:router
+        });
+
+</script>
+
+</html>

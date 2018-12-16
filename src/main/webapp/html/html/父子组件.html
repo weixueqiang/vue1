@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.min.js"></script>
+    <link rel="stylesheet" href="../css/layui.css">
+</head>
+<body>
+    <div id="app">
+        <!--<comp v-bind:parentMsg="msg"></comp>-->
+        <!-- v-bing:子组件属性名称=父组件属性名称，子组件名称需要再组件中的props属性中定义
+            @子组件方法名称=父组件方法名称，再子组件中用this.emit调用
+        -->
+       <comp1 v-bind:msg="msg1" @func="add"></comp1>
+        <!--<comp2 v-bind:parentMsg="msg"></comp2>-->
+        <p>{{ msg1 }}</p>
+        <table class="layui-table">
+            <colgroup>
+                <col width="150">
+                <col width="200">
+                <col width="200">
+                <col width="200">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>加入时间</th>
+                <th>昵称</th>
+                <th>地址</th>
+                <th></th>
+            </tr>
+            </thead>
+            <!-- 实现搜索 -->
+            <tbody v-for="(user,id) in users" :key="user.name">
+            <tr>
+                <td>{{ user.date }}</td>
+                <td>{{ user.name}}</td>
+                <td>{{user.address}}</td>
+                <td><button class="layui-btn layui-btn-danger" >删除</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+<template id="temp">
+   <div class="layui-form-item">
+       <label class="layui-form-label">时间</label>
+        <div class="layui-input-block">
+            <input type="text"  required  lay-verify="required" placeholder="请输入时间" autocomplete="off"
+                   class="layui-input" v-model="date">
+        </div>
+        <label class="layui-form-label">名称</label>
+        <div class="layui-input-block">
+            <input type="text"  required lay-verify="required" placeholder="请输入名称" autocomplete="off"
+                   class="layui-input" v-model="name">
+        </div>
+        <label class="layui-form-label">地址</label>
+        <div class="layui-input-block">
+            <input type="text"  required lay-verify="required" placeholder="请输入住址" autocomplete="off"
+                   class="layui-input" v-model="address" >
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo" @click="save">立即提交</button>
+                <p>+++{{msg}}</p>
+            </div>
+        </div>
+
+    </div>
+
+</template>
+</body>
+<script>
+
+
+
+    let extend = {
+        template:"#temp",
+        data() {
+            return {
+                date: '', name: '', address: ''
+            }
+        },
+        // props: {
+        //     msg:
+        //         {type:String,required:true}
+        //         },
+        //子组件定义接受父组件的参数
+        props:['msg'],
+        methods: {
+            save() {
+                console.log("保存方法调用。。。");
+                //调用父组件的方法
+                this.$emit('func',{date: this.date, name: this.name, address: this.address});
+                this.date=this.name=this.address='';
+            }
+
+        }
+    };
+
+    new Vue({
+            el:"#app",
+            data:{
+                msg1:"你好vue.。。",
+                users: [{
+                    date: '2016-05-02',
+                    name: '张三',
+                    address: '上海市普陀区金沙江路 1518 弄'
+                }, {
+                    date: '2016-05-04',
+                    name: '李四',
+                    address: '上海市普陀区金沙江路 1517 弄'
+                }, {
+                    date: '2016-05-01',
+                    name: '王五',
+                    address: '上海市普陀区金沙江路 1519 弄'
+                }, {
+                    date: '2016-05-03',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1516 弄'
+                }]
+            },
+            methods:{
+                add(user){
+                    this.users.push(user);
+                }
+            },
+            components:{
+                'comp1':extend
+            }
+        });
+
+</script>
+
+</html>
