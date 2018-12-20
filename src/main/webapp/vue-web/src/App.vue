@@ -10,8 +10,8 @@
         background-color="#545c64"
         text-color="#fff"
         active-text-color="#ffd04b">
-      <el-menu-item index="1"><router-link to="/">处理中心</router-link></el-menu-item>
-      <el-menu-item index="2"><router-link to="/user">用户中心</router-link></el-menu-item>
+      <el-menu-item index="1"><router-link tag="span" to="/" class="linkcss" id="linkid">处理中心</router-link></el-menu-item>
+      <el-menu-item index="2"><router-link tag="span" to="/user" class="linkcss">用户中心</router-link></el-menu-item>
       <el-menu-item index="3" disabled>消息中心</el-menu-item>
       <el-menu-item index="4"><a href="https://www.ele.me" target="_blank" >订单管理</a></el-menu-item>
     </el-menu>
@@ -38,5 +38,10 @@
 </script>
 
 <style scoped>
-
+  .linkcss{
+    height: 60px;
+  }
+  #linkid{
+    height: 60px;
+  }
 </style>

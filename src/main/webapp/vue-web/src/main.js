@@ -11,7 +11,7 @@ Vue.use(ElementUi)
 Vue.use(VueReource)
 
 Vue.config.productionTip = false
-
+Vue.http.options.root = 'http://127.0.0.1:8090/user/';
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -19,3 +19,5 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
+

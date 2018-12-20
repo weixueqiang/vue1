@@ -15,10 +15,12 @@
 
     <div id="foot">
       <el-tabs tab-position="bottom">
-        <el-tab-pane label="用户管理" name="first"> <router-link to="">用户管理</router-link></el-tab-pane>
-        <el-tab-pane label="配置管理" name="second"> <router-link to="">配置管理</router-link></el-tab-pane>
-        <el-tab-pane label="角色管理" name="third"> <router-link to="">角色管理</router-link></el-tab-pane>
-        <el-tab-pane label="定时任务补偿" name="fourth"> <router-link to="">定时任务补偿</router-link></el-tab-pane>
+        <router-link to="/"><el-tab-pane label="用户管理" name="first">用户管理 </el-tab-pane></router-link>
+        <!--<router-link to=""> <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane></router-link>-->
+
+
+      <!--  <el-tab-pane label="角色管理" name="third"> <router-link to="">角色管理</router-link></el-tab-pane>
+        <el-tab-pane label="定时任务补偿" name="fourth"> <router-link to="">定时任务补偿</router-link></el-tab-pane>-->
       </el-tabs>
     </div>
   </div>
@@ -59,5 +61,6 @@ export default {
 #foot{
   position: fixed;
   bottom: 0px;
+  border: 1px solid red;
 }
 </style>
