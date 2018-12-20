@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{ msg }}</p>
+        <input type="button" value="change" @click="flag=!flag"/>
+        <p v-if="flag">我是if</p>
+        <p v-show="!flag">我是show</p>
+    </div>
+
+</body>
+<script>
+    new Vue({
+            el:"#app",
+            data:{
+                msg:"你好vue",
+                flag:true
+            }
+        });
+
+</script>
+
+</html>

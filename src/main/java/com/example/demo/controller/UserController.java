@@ -7,14 +7,18 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.bean.CallResult;
+import com.example.demo.bean.User;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
 	static List<User> users = new ArrayList<User>();
 	static {
-		users.add(new User(0, "张三", new Date()));
-		users.add(new User(1, "李四", new Date()));
+		users.add(new User(0, "张三", 12, "男", new Date()));
+		users.add(new User(1, "李四", 13, "男", new Date()));
+		users.add(new User(2, "梅梅", 15, "女", new Date()));
 	}
 
 	@RequestMapping("list")
@@ -25,7 +29,7 @@ public class UserController {
 	@RequestMapping("save")
 	public CallResult save(User user) {
 		user.setId(users.size());
-		user.setDate(new Date());
+		user.setCreateTime(new Date());
 		users.add(user);
 		return CallResult.ok();
 	}
