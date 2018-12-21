@@ -23,6 +23,7 @@
 </template>
 
 <script>
+//  import test from './js/test.js'
   export default {
     data() {
       return {

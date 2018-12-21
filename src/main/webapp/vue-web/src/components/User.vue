@@ -1,7 +1,7 @@
 <template>
     <div >
       <el-row>
-        <el-button type="primary" @click="dialogFormVisible=true">新增</el-button>
+        <el-button type="primary" @click="add">新增</el-button>
       </el-row>
       <el-table :data="tableData" stripe style="width: 100%" >
         <el-table-column  prop="id" label="标识"  width="180"></el-table-column>
@@ -21,7 +21,7 @@
       <!-- Form -->
       <!--<el-button type="text" @click="dialogFormVisible = true">打开嵌套表单的 Dialog</el-button>-->
 
-      <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
+      <el-dialog title="用户编辑" :visible.sync="dialogFormVisible">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
           <input type="hidden" v-model="ruleForm.id" name="id"/>
           <el-form-item label="姓名" prop="username">
@@ -56,6 +56,7 @@
 //    console.log(date.getFullYear()+"...");
 //    return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDay();
 //  })
+//import test from '../js/test.js'
 
     export default {
         data(){
@@ -90,6 +91,7 @@
       methods:{
             list(){
               this.$http.get('list').then( (result)=> {
+//                  test.errmsg(this,'全局js错误信息!');
                 // console.log(JSON.stringify(result))
                 let body = result.body;
                 if(body.succee){
@@ -140,6 +142,12 @@
           this.$refs[formName].resetFields();
         },
         edit(index,row){
+          this.$message({
+            showClose: true,
+            message: '全局js错误信息!',
+            type: 'error',
+            duration:3000
+          });
           this.$http.get('get'+"?id="+row.id).then((obj)=>{
             let result = obj.body;
             if(result.succee){
@@ -195,6 +203,11 @@
               age: '',
               sex:this.ruleForm.sex,
           }
+        },
+        add(){
+          this.resetData();
+          console.log("............")
+          this.dialogFormVisible=true;
         }
       }
 
