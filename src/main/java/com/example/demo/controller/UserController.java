@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,14 +24,30 @@ public class UserController {
 
 	@RequestMapping("list")
 	public CallResult list() {
+
+		// return CallResult.err("错误测试");
 		return CallResult.ok(users);
 	}
 
 	@RequestMapping("save")
 	public CallResult save(User user) {
-		user.setId(users.size());
-		user.setCreateTime(new Date());
-		users.add(user);
+		if (StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getSex()) || user.getAge() == null) {
+			return CallResult.err("请正确填写数据");
+		}
+		if (user.getId() == null) {
+			user.setId(users.size());
+			user.setCreateTime(new Date());
+			users.add(user);
+		} else {
+			for (int i = 0; i < users.size(); i++) {
+				if (users.get(i).getId() == user.getId()) {
+					users.remove(i);
+					user.setCreateTime(new Date());
+					users.add(i, user);
+					break;
+				}
+			}
+		}
 		return CallResult.ok();
 	}
 
@@ -40,6 +57,19 @@ public class UserController {
 			if (users.get(i).getId() == id) {
 				users.remove(i);
 				break;
+			}
+		}
+		return CallResult.ok();
+	}
+
+	@RequestMapping("get")
+	public CallResult save(Integer id) {
+		if (id == null) {
+			return CallResult.err("请正确填写数据");
+		}
+		for (int i = 0; i < users.size(); i++) {
+			if (users.get(i).getId() == id) {
+				return CallResult.ok(users.get(i));
 			}
 		}
 		return CallResult.ok();
