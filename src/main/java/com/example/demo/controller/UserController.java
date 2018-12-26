@@ -90,4 +90,18 @@ public class UserController {
 		return CallResult.err("用户名或密码错误");
 	}
 
+	@RequestMapping("register")
+	public CallResult register(User user) {
+		if (StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword())) {
+			return CallResult.err("请正确填写数据");
+		}
+		for (int i = 0; i < users.size(); i++) {
+			if (users.get(i).getUsername().equals(user.getUsername())
+					&& users.get(i).getPassword().equals(user.getPassword())) {
+				return CallResult.ok();
+			}
+		}
+		return CallResult.err("用户名或密码错误");
+	}
+
 }

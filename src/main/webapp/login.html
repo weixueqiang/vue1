@@ -8,14 +8,18 @@
     <script src="js/vue-router.js"></script>
     <script src="js/vue-resource1.5.1.js"></script>
     <script src="js/element.js"></script>
-    <link rel="stylesheet" href="js/element-ui.css"/>
     <style>
+
       #login{
         width: 400px;
         height: 400px;
         position: fixed;
         top:200px;
         right:200px;
+      }
+      #login .el-tabs__item{
+        width:200px;
+        text-align: center;
       }
       .demo-ruleForm{
         height: 226px;
@@ -24,10 +28,15 @@
         width: 50px;
         padding-right: 20px;
       }
-      .el-form-item__content{
-        margin-left: 80px;
+      #login  .el-form-item__content{
+        margin-right: 30px;
       }
+      #loginform{
+        padding-top: 40px;
+      }
+
     </style>
+    <link rel="stylesheet" href="js/element-ui.css"/>
   </head>
   <body>
     <div id="login">
@@ -37,7 +46,7 @@
     <template id="tabid">
       <el-tabs v-model="activeName" @tab-click="handleClick" type="border-card">
         <el-tab-pane label="用户登录" name="first">
-          <div>
+          <div id="loginform">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
               <el-form-item label="姓名" prop="username">
                 <el-input v-model="ruleForm.username"></el-input>
@@ -147,7 +156,20 @@
                   if (!valid) {
                       console.log('失败了');
                       return false;
-                  }
+                  };
+                  this.$http.post('save',this.regForm).then(obj=>{
+                      var body = obj.body;
+                      if(body.succee){
+                          this.$message({
+                              message: '恭喜你，注册成功',
+                              type: 'success'
+                          });
+                          this.activeName='first';
+                      }else{
+                          this.$message.error(body.msg);
+                      }
+                  })
+
               });
           },
           resetForm(formName) {
