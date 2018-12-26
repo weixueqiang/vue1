@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{ msg }}</p>
+        <comp>
+            <h1>没有加slot时看不见我</h1>
+            <template slot="boy"><p>我是一个阳光男孩</p></template>
+            <template slot="girl"><p>我是一个漂亮女孩</p></template>
+        </comp>
+    </div>
+</body>
+<template id="temp">
+    <div>
+        slot test!
+        <slot name="boy"></slot>
+        <slot name="girl"></slot>
+        <slot ></slot>
+    </div>
+</template>
+<script>
+
+    Vue.component('comp',{
+        template:"#temp"
+    })
+    new Vue({
+            el:"#app",
+            data:{
+                msg:"你好vue"
+            }
+        });
+
+</script>
+
+</html>

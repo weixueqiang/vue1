@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>login</title>
+    <script src="js/vue.js"></script>
+    <script src="js/vue-router.js"></script>
+    <script src="js/vue-resource1.5.1.js"></script>
+    <script src="js/element.js"></script>
+    <link rel="stylesheet" href="js/element-ui.css"/>
+    <style>
+      #login{
+        width: 400px;
+        height: 400px;
+        position: fixed;
+        top:200px;
+        right:200px;
+      }
+      .demo-ruleForm{
+        height: 226px;
+      }
+      #login .el-form-item__label{
+        width: 50px;
+        padding-right: 20px;
+      }
+      .el-form-item__content{
+        margin-left: 80px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="login">
+      <tab></tab>
+
+    </div>
+    <template id="tabid">
+      <el-tabs v-model="activeName" @tab-click="handleClick" type="border-card">
+        <el-tab-pane label="用户登录" name="first">
+          <div>
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+              <el-form-item label="姓名" prop="username">
+                <el-input v-model="ruleForm.username"></el-input>
+              </el-form-item>
+              <el-form-item label="密码" prop="password">
+                <el-input type="password" v-model="ruleForm.password"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+                <el-button @click="resetForm('ruleForm')">重置</el-button>
+              </el-form-item>
+            </el-form>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="用户注册" name="second">
+          <div>
+            <template id="register">
+              <el-form :model="regForm" :rules="regRules" ref="regForm" label-width="100px" class="demo-ruleForm">
+                <el-form-item label="姓名" prop="username">
+                  <el-input v-model="regForm.username"></el-input>
+                </el-form-item>
+                <el-form-item label="年龄" prop="age">
+                  <el-input v-model="regForm.age"></el-input>
+                </el-form-item>
+                <el-form-item label="性别" prop="sex">
+                  <el-select v-model="regForm.sex" placeholder="请选择性别">
+                    <el-option label="男" value="男"></el-option>
+                    <el-option label="女" value="女"></el-option>
+                  </el-select>
+                </el-form-item>
+
+                <el-form-item>
+                  <el-button type="primary" @click="submitregForm('regForm')">保存</el-button>
+                  <el-button @click="resetForm('regForm')">重置</el-button>
+                </el-form-item>
+              </el-form>
+            </template>
+          </div>
+        </el-tab-pane>
+      </el-tabs>
+    </template>
+
+
+
+
+  </body>
+<script>
+    Vue.http.options.root = 'http://127.0.0.1:8090/user/';
+    Vue.http.options.emulateJSON=true;
+
+    Vue.component('regtab',{
+        template:'#register',
+
+    });
+
+  Vue.component('tab',{
+      template:'#tabid',
+      data() {
+          return {
+              activeName: 'first',
+              ruleForm:{username:'',password:''},
+              regForm:{username:'',age:'',sex:''},
+              rules: {
+                  username: [
+                      {required: true, message: '请输入姓名', trigger: 'blur'},
+                      {min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur'}
+                  ],
+                  password: [
+                      {required: true, message: '请输入密码', trigger: 'blur'}
+                  ]
+              },
+              regRules: {
+                  username: [
+                      {required: true, message: '请输入姓名', trigger: 'blur'},
+                      {min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur'}
+                  ],
+                  age: [
+                      {required: true, message: '请输入年龄', trigger: 'blur'}
+                  ]
+              }
+          };
+      },
+      methods: {
+          handleClick(tab, event) {
+              console.log(tab, event);
+          },
+          submitForm(formName) {
+              this.$refs[formName].validate((valid) => {
+                  if (!valid) {
+                      console.log('失败了');
+                      return false;
+                  }
+              });
+              console.log(this.$refs[formName].$el);
+              this.$http.post('login',this.ruleForm).then(result=>{
+                  let body = result.body;
+                  if(body.succee){
+                      console.log("登录成功!");
+                      window.location.href=('index.html');
+                  }else {
+                      this.$message.error(body.msg);
+                  }
+              })
+          },
+          submitregForm(formName) {
+              this.$refs[formName].validate((valid) => {
+                  if (!valid) {
+                      console.log('失败了');
+                      return false;
+                  }
+              });
+          },
+          resetForm(formName) {
+              this.$refs[formName].resetFields();
+          }
+      },
+  });
+
+  new Vue({
+      el:'#login',
+      data:{
+          msg:'login..',
+      },
+      methods:{
+
+      }
+  })
+</script>
+</html>

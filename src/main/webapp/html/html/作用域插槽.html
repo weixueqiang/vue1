@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{ msg }}</p>
+        <comp :items="items">
+            <template slot-scope="props">
+                <p>--{{props.cname}}--{{props.addr}}--{{props.age}} </p>
+            </template>
+        </comp>
+
+
+
+    </div>
+</body>
+<template id="temp">
+    <div>
+
+        <slot :cname="items[0].cname"></slot>
+        <slot :addr="items[1].addr"></slot>
+        <slot :age="12"></slot>
+    </div>
+</template>
+<script>
+
+    Vue.component('comp',{
+        template:"#temp",
+        props:['items']
+    })
+    new Vue({
+            el:"#app",
+            data:{
+                msg:"你好vue",
+                items:[{cname:'kangkang',addr:'fuzhou'},
+                        {cname:'juan',addr:'quzhou'}
+                    ]
+            }
+        });
+
+</script>
+
+</html>

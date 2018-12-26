@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{ msg }}</p>
+        <comp>没有加slot时看不见我----
+            <template slot-scope="a">
+                <p>{{a}}</p>
+                <p>{{a.araything}}</p>
+            </template>
+        </comp>
+        <comp2 :userlist="users">
+            <template slot-scope="b">
+                <p v-if="b.data.id==1">你好!{{b.data.username}}</p>
+                <p v-else>{{b.data.username}}</p>
+            </template>
+        </comp2>
+    </div>
+</body>
+<template id="temp">
+    <div>
+        slot test!
+        <slot araything="你好"></slot>
+    </div>
+</template>
+<template id="temp2">
+    <div>
+        <div v-for="user in userlist">
+            <slot :data="user"></slot>
+        </div>
+    </div>
+</template>
+
+<script>
+
+    Vue.component('comp',{
+        template:"#temp"
+    });
+    Vue.component('comp2',{
+        template:"#temp2",
+        props:['userlist']
+    });
+
+    new Vue({
+            el:"#app",
+            data:{
+                msg:"你好vue",
+                users:[
+                    {username:"zhangsan",age:12,id:1},
+                    {username:"lisi",age:12,id:2},
+                    {username:"wangwu",age:12,id:3}
+                ]
+            }
+        });
+
+</script>
+
+</html>

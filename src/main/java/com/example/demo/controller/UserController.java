@@ -37,6 +37,7 @@ public class UserController {
 		if (user.getId() == null) {
 			user.setId(users.size());
 			user.setCreateTime(new Date());
+			user.setPassword("123456");
 			users.add(user);
 		} else {
 			for (int i = 0; i < users.size(); i++) {
@@ -73,6 +74,20 @@ public class UserController {
 			}
 		}
 		return CallResult.ok();
+	}
+
+	@RequestMapping("login")
+	public CallResult login(User user) {
+		if (StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword())) {
+			return CallResult.err("请正确填写数据");
+		}
+		for (int i = 0; i < users.size(); i++) {
+			if (users.get(i).getUsername().equals(user.getUsername())
+					&& users.get(i).getPassword().equals(user.getPassword())) {
+				return CallResult.ok();
+			}
+		}
+		return CallResult.err("用户名或密码错误");
 	}
 
 }

@@ -12,6 +12,7 @@ public class User implements Serializable {
 	private String username;
 	private Integer age;
 	private String sex;
+	private String password;
 	private Date createTime;
 
 	public User(Integer id, String username, Integer age, String sex, Date createTime) {
@@ -21,6 +22,12 @@ public class User implements Serializable {
 		this.age = age;
 		this.sex = sex;
 		this.createTime = createTime;
+		this.password = "123456";
+	}
+
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 }

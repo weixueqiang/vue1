@@ -56,7 +56,7 @@
 //    console.log(date.getFullYear()+"...");
 //    return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDay();
 //  })
-//import test from '../js/test.js'
+import test from '../js/test.js'
 
     export default {
         data(){
