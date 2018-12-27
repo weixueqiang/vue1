@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{ msg }}</p>
+        <p>计算缓存{{ date }}</p>
+        <p>非计算缓存{{ date1() }}</p>
+        <p>计算缓存{{ date }}</p>
+        <p>非计算缓存{{ date1() }}</p>
+        <p>计算缓存{{ date }}</p>
+        <p>非计算缓存{{ date1() }}</p>
+        <p>计算缓存{{ date }}</p>
+        <p>非计算缓存{{ date1() }}</p>
+        <p>计算缓存{{ date }}</p>
+        <p>非计算缓存{{ date1() }}</p>
+        <p>计算缓存{{ date }}</p>
+        <p>非计算缓存{{ date1() }}</p>
+    </div>
+</body>
+<script>
+    var index=1;
+    var index1=1;
+    new Vue({
+            el:"#app",
+            data:{
+                msg:"你好vue"
+            },
+            methods:{
+                date1(){
+                    let date = new Date();
+                    return index++;
+                }
+            },
+            computed:{
+                date(){
+                    let date = new Date();
+                    return index1++;
+                }
+            }
+        });
+
+</script>
+
+</html>
