@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import User from  '../components/User'
 import form from '../components/form'
+import index from  '../components/index'
 Vue.use(Router)
 
 export default new Router({
@@ -18,6 +19,10 @@ export default new Router({
     {
       path: '/form',
       component: form
+    },
+    {
+      path:'/index',
+      component:index
     }
   ]
 })

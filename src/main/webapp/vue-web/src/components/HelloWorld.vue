@@ -1,9 +1,9 @@
 <template>
 <el-tree
-  :data="data2"
+  :data="data"
   show-checkbox
   node-key="id"
-
+  @node-click="tclick"
   :default-expanded-keys="[2, 3]"
   :default-checked-keys="[5]"
   :props="defaultProps">
@@ -13,36 +13,27 @@
   export default {
     data() {
       return {
-        data2: [{
-          id: 1,
-          label: '一级 1',
-          children: [{
-            id: 4,
-            label: '二级 1-1',
-            children: [{
-              id: 9,
-              label: '三级 1-1-1'
-            }, {
-              id: 10,
-              label: '三级 1-1-2'
-            }]
-          }]
-        }],
+        data: [],
         defaultProps: {
           children: 'children',
-          label: function (data,node) {
-            return data.label+'--';
-          }
+          label:'name'
         }
       };
     },
     methods:{
-        names(data, node){
-            return 'dfsfs';
-        },
-        label(data, node){
-           return data.label+'--';
-        }
+      tclick(){
+            console.log('lllllllllllllllllll');
+      },
+      getTree(){
+          this.$http.get('resource/list').then(obj=>{
+              let body = obj.body;
+              if(body.succee){
+
+              }else{
+
+              }
+          })
+      }
     }
   };
 </script>
