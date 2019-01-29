@@ -11,6 +11,7 @@ public class Resource implements Serializable {
 
 	private Integer id;
 	private String name;
+	private String parentName;
 	private Integer parentId;
 	private List<Resource> children;
 
@@ -34,6 +35,15 @@ public class Resource implements Serializable {
 		resources.add(new Resource(12, "教务处", 1));
 	}
 
+	public static Resource get(Integer id) {
+		for (Resource resource : resources) {
+			if (resource.getId() == id) {
+				return resource;
+			}
+		}
+		return null;
+	}
+
 	public static List<Resource> getTree() {
 		return buidTree(resources, 0);
 	}
@@ -50,7 +60,10 @@ public class Resource implements Serializable {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(getTree());
+		getTree();
+		System.out.println(resources);
+		System.out.println(get(1));
+
 	}
 
 }
