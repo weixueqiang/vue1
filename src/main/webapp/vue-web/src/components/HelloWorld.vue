@@ -82,6 +82,7 @@
     },
     created(){
       this.list();
+      console.log("tt")
     },
     methods:{
       list(){
