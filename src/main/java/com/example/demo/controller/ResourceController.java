@@ -9,7 +9,7 @@ import com.example.demo.bean.CallResult;
 import com.example.demo.bean.Resource;
 
 @RestController
-@RequestMapping("/user/resource")
+@RequestMapping("/vue/resource")
 public class ResourceController {
 
 	@RequestMapping("/list")

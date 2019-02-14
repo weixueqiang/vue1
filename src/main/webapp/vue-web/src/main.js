@@ -14,7 +14,7 @@ Vue.use(VueReource)
 
 Vue.config.productionTip = false
 // Vue.http.options.root = 'http://127.0.0.1:8090/user/';
-//Vue.http.options.root = 'http://192.168.99.54:8090/user/';
+// Vue.http.options.root = 'http://192.168.99.54:8090/vue/';
 Vue.http.options.emulateJSON=true;
 /* eslint-disable no-new */
 new Vue({

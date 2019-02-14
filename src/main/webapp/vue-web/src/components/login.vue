@@ -96,7 +96,7 @@
           }
         });
         console.log(this.$refs[formName].$el);
-        this.$http.post('login',this.ruleForm).then(result=>{
+        this.$http.post('user/login',this.ruleForm).then(result=>{
           let body = result.body;
           if(body.succee){
             console.log("登录成功!");
@@ -116,7 +116,7 @@
             console.log('失败了');
             return false;
           };
-          this.$http.post('save',this.regForm).then(obj=>{
+          this.$http.post('/user/save',this.regForm).then(obj=>{
             var body = obj.body;
             if(body.succee){
               this.$message({

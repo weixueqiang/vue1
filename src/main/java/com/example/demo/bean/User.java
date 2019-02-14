@@ -1,6 +1,7 @@
 package com.example.demo.bean;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -10,6 +11,7 @@ public class User implements Serializable {
 	@Id
 	@com.example.demo.utils.Id
 	private String id;
+	private Integer age;
 
 	private String username;
 
@@ -17,7 +19,21 @@ public class User implements Serializable {
 
 	private String sex;
 
+	private Date createTime;
+
 	private static final long serialVersionUID = 1L;
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	/**
 	 * @return id
@@ -78,5 +94,13 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", sex=" + sex + "]";
+	}
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
 	}
 }

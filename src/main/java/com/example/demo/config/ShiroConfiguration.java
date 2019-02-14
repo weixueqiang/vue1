@@ -51,8 +51,9 @@ public class ShiroConfiguration {
 
 		// Map<String, String> map = new HashMap<String, String>();
 
-		map.put("/user/login", "anon");
-		map.put("/user/register", "anon");
+		map.put("/**/user/login", "anon");
+		map.put("/**/user/register", "anon");
+		map.put("/**/auth/authz", "anon");
 		map.put("/**/.js", "anon");
 		map.put("/**/.css", "anon");
 		// 登出
@@ -61,7 +62,7 @@ public class ShiroConfiguration {
 		map.put("/**", "cross,authc");
 		// 登录
 		// shiroFilterFactoryBean.setLoginUrl("/index.html");
-		shiroFilterFactoryBean.setLoginUrl("/user/login");
+		shiroFilterFactoryBean.setLoginUrl("/auth/authz");
 		// 首页
 		// shiroFilterFactoryBean.setSuccessUrl("/index");
 		// 错误页面，认证不通过跳转

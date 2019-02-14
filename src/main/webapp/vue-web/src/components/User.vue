@@ -90,7 +90,7 @@ import test from '../js/test.js'
       },
       methods:{
             list(){
-              this.$http.get('list').then( (result)=> {
+              this.$http.get('user/list').then( (result)=> {
 //                  test.errmsg(this,'全局js错误信息!');
                 // console.log(JSON.stringify(result))
                 let body = result.body;
@@ -122,7 +122,7 @@ import test from '../js/test.js'
               console.log('失败了');
               return false;
             }
-            this.$http.post('save',this.ruleForm).then((result)=>{
+            this.$http.post('user/save',this.ruleForm).then((result)=>{
               let body = result.body;
               if(body.succee){
                 this.list();
@@ -142,13 +142,13 @@ import test from '../js/test.js'
           this.$refs[formName].resetFields();
         },
         edit(index,row){
-          this.$message({
-            showClose: true,
-            message: '全局js错误信息!',
-            type: 'error',
-            duration:3000
-          });
-          this.$http.get('get'+"?id="+row.id).then((obj)=>{
+//          this.$message({
+//            showClose: true,
+//            message: '全局js错误信息!',
+//            type: 'error',
+//            duration:3000
+//          });
+          this.$http.get('user/get'+"?id="+row.id).then((obj)=>{
             let result = obj.body;
             if(result.succee){
               this.dialogFormVisible=true;
@@ -172,7 +172,7 @@ import test from '../js/test.js'
             type: 'warning',
             center:true
           }).then(() => {
-            this.$http.get('delete?id='+row.id).then((obj)=>{
+            this.$http.get('user/delete?id='+row.id).then((obj)=>{
               let result = obj.body;
               if(result.succee){
                 this.$message({

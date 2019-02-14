@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/': {
-        target: 'http://192.168.99.54:8090/user',
+        target: 'http://192.168.99.54:8090/vue/',
         changeOrigin: true,
         pathRewrite: {
           '^/': '/'
