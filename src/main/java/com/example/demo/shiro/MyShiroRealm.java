@@ -21,7 +21,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-
+		System.out.println("ko.....");
 		return null;
 	}
 

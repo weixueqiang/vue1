@@ -25,7 +25,7 @@ public class UserController {
 
 		// return CallResult.err("错误测试");
 		System.out.println("ok...");
-		return CallResult.ok();
+		return CallResult.ok(userMapper.selectAll());
 	}
 
 	@RequestMapping("save")
@@ -57,7 +57,9 @@ public class UserController {
 			try {
 				subject.login(token);
 			} catch (Exception e) {
-				return CallResult.err("用户名或密码错误");
+				CallResult ok = CallResult.ok();
+				ok.setCode(401);
+				return ok;
 			}
 		}
 		return CallResult.ok();

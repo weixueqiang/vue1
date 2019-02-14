@@ -102,6 +102,9 @@
             console.log("登录成功!");
 //            this.logined=true;
             window.location.href=('#/center/hello');
+
+
+
           }else {
             this.$message.error(body.msg);
           }
