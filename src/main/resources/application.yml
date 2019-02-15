@@ -5,6 +5,8 @@ mybatis:
   mapperLocations: classpath:mapper/*.xml
   configLocation: classpath:SqlMapConfig.xml
   
+    
+  
 spring:
     datasource:
         driver-class-name: com.mysql.jdbc.Driver
@@ -14,9 +16,11 @@ spring:
         type: org.apache.commons.dbcp.BasicDataSource
         dbcp2: 
           max-total: 20
-       
-    
-      
+          
+logging:
+    level:
+      com.example.demo.mapper: DEBUG   
+     
       
     
    

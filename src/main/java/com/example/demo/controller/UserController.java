@@ -41,7 +41,10 @@ public class UserController {
 
 	@RequestMapping("delete")
 	public CallResult delete(Integer id) {
-
+		if (id == null) {
+			return CallResult.err("id不能为空");
+		}
+		userMapper.deleteByPrimaryKey(id);
 		return CallResult.ok();
 	}
 

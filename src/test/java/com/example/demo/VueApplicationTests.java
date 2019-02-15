@@ -11,6 +11,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.example.demo.bean.User;
 import com.example.demo.mapper.UserMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 import tk.mybatis.mapper.entity.Example;
 
@@ -40,6 +42,14 @@ public class VueApplicationTests {
 		user.setPassword("123456");
 		user.setSex("man");
 		userMapper.insert(user);
+	}
+
+	@Test
+	public void pageTest() {
+		PageHelper.startPage(1, 2);
+		List<User> selectAll = userMapper.selectAll();
+		PageInfo<User> page = new PageInfo<>(selectAll);
+		System.out.println(page);
 	}
 
 }

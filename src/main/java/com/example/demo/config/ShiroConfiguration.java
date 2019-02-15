@@ -59,7 +59,7 @@ public class ShiroConfiguration {
 		// 登出
 		map.put("/logout", "logout");
 		// 对所有用户认证
-		map.put("/**", "cross,authc");
+		// map.put("/**", "cross,authc");
 		// 登录
 		// shiroFilterFactoryBean.setLoginUrl("/index.html");
 		shiroFilterFactoryBean.setLoginUrl("/auth/authz");
